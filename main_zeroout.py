@@ -213,16 +213,12 @@ def train():
         if batch % args.log_interval == 0 and batch > 0:
             nonzero_cnt = 0.
             total_cnt = 0.
+
             # zero out gradient
-            # TODO: EVERY BATCH OR EVERY EPOCH?
-            # index = 0
             threshold = zero_threshold
             for param in model.parameters():
-                # cond = cond_dict[index]
                 cond = torch.abs(param.data) < threshold
                 param.data[cond] = 0
-                #param.grad.data[cond] = 0
-                # index += 1
 
                 # statistics
                 # variable contains tensor
@@ -257,8 +253,8 @@ def train():
 def row_col_sparsity(t, label):
     col_zero_idx = torch.sum(torch.abs(t), dim=0) == 0
     row_zero_idx = torch.sum(torch.abs(t), dim=1) == 0
-    print(label + 'column sparsity: ', torch.sum(col_zero_idx).data[0] / t.size()[1])
-    print(label + 'row sparsity: ', torch.sum(row_zero_idx).data[0] / t.size()[0])
+    print(label + 'column sparsity: ', torch.sum(col_zero_idx).data[0] / float(t.size()[1]))
+    print(label + 'row sparsity: ', torch.sum(row_zero_idx).data[0] / float(t.size()[0]))
 
 
 def get_num(input):

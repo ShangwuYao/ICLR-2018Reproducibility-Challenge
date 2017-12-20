@@ -234,9 +234,9 @@ def train():
             weight_l1 = torch.cat((model.rnn.weight_ih_l1, model.rnn.weight_hh_l1), 1)
             weight_l2 = model.decoder.weight
 
-            row_col_sparsity(weight_l0, 'weight_l0')
-            row_col_sparsity(weight_l1, 'weight_l1')
-            row_col_sparsity(weight_l2, 'weight_l2')
+            row_col_sparsity(weight_l0, 'weight_l0 ')
+            row_col_sparsity(weight_l1, 'weight_l1 ')
+            row_col_sparsity(weight_l2, 'weight_l2 ')
 
             cur_loss = total_loss[0] / args.log_interval
             cur_reg_loss= reg_loss[0] / args.log_interval
@@ -253,8 +253,8 @@ def train():
 def row_col_sparsity(t, label):
     col_zero_idx = torch.sum(torch.abs(t), dim=0) == 0
     row_zero_idx = torch.sum(torch.abs(t), dim=1) == 0
-    print(label + 'column sparsity: ', torch.sum(col_zero_idx).data[0] / t.size()[1])
-    print(label + 'row sparsity: ', torch.sum(row_zero_idx).data[0] / t.size()[0])
+    print(label + 'column sparsity: ', torch.sum(col_zero_idx).data[0] / float(t.size()[1]))
+    print(label + 'row sparsity: ', torch.sum(row_zero_idx).data[0] / float(t.size()[0]))
 
 
 def get_num(input):

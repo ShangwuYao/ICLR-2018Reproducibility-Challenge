@@ -1,6 +1,9 @@
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
+
+# TODO: proves that zero out operation doesn't have gradient
+
 X = Variable(torch.FloatTensor([4,4]))
 a = Variable(torch.FloatTensor([2,4]), requires_grad = True)
 y = a * X
